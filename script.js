@@ -9,11 +9,13 @@ mapboxgl.accessToken = 'pk.eyJ1IjoibmFkaW5lY29uc3VuamkiLCJhIjoiY21rZWU1djI4MDV6N
 
 // Center coordinates for map on load and zoom change(to change, refer to https://labs.mapbox.com/location-helper)
 const center = [22.34868, -0.31974];
-const centerEast = [0, 0];
-const centerWest = [0, 0];
+const centerEast = [-2.6, 40.3];
+const centerWest = [12.9, -1.7];
 const centerNorth = [17.5, 19.5];
-const centerSouth = [0, 0];
+const centerSouth = [-17.9, 24.9];
 const zoom = 2.6;
+const minZoom = 2.3;
+const maxZoom = 3.0;
 
 // Initialize map and edit to your preference
 const map = new mapboxgl.Map({
@@ -21,8 +23,8 @@ const map = new mapboxgl.Map({
     style: 'mapbox://styles/nadineconsunji/cmmbdfg9r007x01ryckrx8rx8',
     center: center,  // starting point, longitude/latitude - SEE LINES 10-11
     zoom: zoom, // starting zoom level - SEE LINE 10, 12
-    minZoom: 2.3,
-    maxZoom: 3.0
+    minZoom: minZoom,
+    maxZoom: maxZoom
     // pitch: '', [CAN USE FOR 3D MAP VISUALIZATION] 
 });
 
@@ -257,27 +259,32 @@ map.on('load', () => {
         } else if (selectedRegion == 'east') {
             map.setFilter(currentData, ['==', ['get', 'region'], 'east']);
             map.flyTo({
-                center: center,
+                center: centerEast,
+                zoom: maxZoom
             });
         } else if (selectedRegion == 'west') {
             map.setFilter(currentData, ['==', ['get', 'region'], 'west']);
             map.flyTo({
-                center: center,
+                center: centerWest,
+                zoom: maxZoom
             });
         } else if (selectedRegion == 'north') {
             map.setFilter(currentData, ['==', ['get', 'region'], 'north']);
             map.flyTo({
                 center: centerNorth,
+                zoom: maxZoom
             });
         } else if (selectedRegion == 'south') {
             map.setFilter(currentData, ['==', ['get', 'region'], 'south']);
             map.flyTo({
-                center: center,
+                center: centerSouth,
+                zoom: maxZoom
             });
         } else if (selectedRegion == 'central') {
             map.setFilter(currentData, ['==', ['get', 'region'], 'central']);
             map.flyTo({
                 center: center,
+                zoom: maxZoom
             });
         }
     }
