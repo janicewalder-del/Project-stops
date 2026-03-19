@@ -255,27 +255,27 @@ map.on('load', () => {
         if (selectedRegion == 'all') {
             map.setFilter(currentData, null);
         } else if (selectedRegion == 'east') {
-            map.setFilter(currentData, ['==', ['get', 'region'], selectedRegion]);
+            map.setFilter(currentData, ['==', ['get', 'region'], 'east']);
             map.flyTo({
                 center: center,
             });
         } else if (selectedRegion == 'west') {
-            map.setFilter(currentData, ['==', ['get', 'region'], selectedRegion]);
+            map.setFilter(currentData, ['==', ['get', 'region'], 'west']);
             map.flyTo({
                 center: center,
             });
         } else if (selectedRegion == 'north') {
-            map.setFilter(currentData, ['==', ['get', 'region'], selectedRegion]);
+            map.setFilter(currentData, ['==', ['get', 'region'], 'north']);
             map.flyTo({
                 center: centerNorth,
             });
         } else if (selectedRegion == 'south') {
-            map.setFilter(currentData, ['==', ['get', 'region'], selectedRegion]);
+            map.setFilter(currentData, ['==', ['get', 'region'], 'south']);
             map.flyTo({
                 center: center,
             });
         } else if (selectedRegion == 'central') {
-            map.setFilter(currentData, ['==', ['get', 'region'], selectedRegion]);
+            map.setFilter(currentData, ['==', ['get', 'region'], 'central']);
             map.flyTo({
                 center: center,
             });
