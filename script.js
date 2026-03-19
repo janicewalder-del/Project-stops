@@ -205,43 +205,19 @@ map.on('load', () => {
     function handleData() {
 
         var selectedData = document.getElementById("selections").value;
+        layers.forEach(layer => { map.setLayoutProperty(layer, 'visibility', 'none') });
+
         if (selectedData == 'composite') {
-            layers.forEach(layer => { map.setLayoutProperty(layer, 'visibility', 'none') });
-            updateLegend(composite_stops);
+            // updateLegend(composite_stops);
             map.setLayoutProperty('composite_index_layer', 'visibility', 'visible');
-        } else {
-            layers.forEach(layer => { map.setLayoutProperty(layer, 'visibility', 'none') });
-        }
-        if (selectedData == 'readiness') {
-            updateLegend(readiness_stops);
+        } else if (selectedData == 'readiness') {
+            // updateLegend(readiness_stops);
             map.setLayoutProperty('transition_readiness_layer', 'visibility', 'visible');
-        }
-        if (selectedData == 'performance') {
-            updateLegend(performance_stops);
+        } else if (selectedData == 'performance') {
+            // updateLegend(performance_stops);
             map.setLayoutProperty('system_performance_layer', 'visibility', 'visible');
         }
     };
-
-    function handleData() {
-        var selectedData = document.getElementById("selections").value;
-
-        layers.forEach(layer => { map.setLayoutProperty(layer, 'visibility', 'none') });
-
-        switch (selectedData) {
-            case 'composite':
-                map.setLayoutProperty('composite_index_layer', 'visibility', 'visible');
-                updateLegend(composite_stops);
-                break;
-            case 'readiness':
-                map.setLayoutProperty('transition_readiness_layer', 'visibility', 'visible');
-                updateLegend(readiness_stops);
-                break;
-            case 'performance':
-                map.setLayoutProperty('system_performance_layer', 'visibility', 'visible');
-                updateLegend(performance_stops);
-                break;
-        }
-    }
 
     document.getElementById("selections").addEventListener("change", handleData);
 
