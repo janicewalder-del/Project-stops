@@ -204,14 +204,19 @@ map.on('load', () => {
 
     function handleData() {
 
-        layers.forEach(layer => { map.setLayoutProperty(layer, 'visibility', 'none') });
-        if (document.getElementById('composite').checked) {
+        var selectedData = document.getElementById("selections").value;
+        if (selectedData == 'composite') {
+            layers.forEach(layer => { map.setLayoutProperty(layer, 'visibility', 'none') });
             updateLegend(composite_stops);
             map.setLayoutProperty('composite_index_layer', 'visibility', 'visible');
-        } else if (document.getElementById('readiness').checked) {
+        } else {
+            layers.forEach(layer => { map.setLayoutProperty(layer, 'visibility', 'none') });
+        }
+        if (selectedData == 'readiness') {
             updateLegend(readiness_stops);
             map.setLayoutProperty('transition_readiness_layer', 'visibility', 'visible');
-        } else if (document.getElementById('performance').checked) {
+        }
+        if (selectedData == 'performance') {
             updateLegend(performance_stops);
             map.setLayoutProperty('system_performance_layer', 'visibility', 'visible');
         }
