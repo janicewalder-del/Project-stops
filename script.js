@@ -287,12 +287,11 @@ map.on('load', () => {
                     center: center,
                     zoom: maxZoom
                 });
-            }
+            };
         });
-
-        document.getElementById("regions").addEventListener("change", handleRegions);
-
     };
+
+    document.getElementById("regions").addEventListener("change", handleRegions);
 
 });
 
