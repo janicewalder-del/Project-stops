@@ -8,6 +8,7 @@ mapboxgl.accessToken = 'pk.eyJ1IjoibmFkaW5lY29uc3VuamkiLCJhIjoiY21rZWU1djI4MDV6N
 // mapboxgl.accessToken = 'pk.eyJ1IjoiZGFuaWVsODEwMTciLCJhIjoiY21rZWI2eGg4MDU5NjNscHdxbjhkMTNmciJ9.jdsMukp7zHz3llySNBJs0A';
 
 // Center coordinates for map on load and zoom change(to change, refer to https://labs.mapbox.com/location-helper)
+// FIX COORDINATES FOR EAST, WEST, AND SOUTH
 const center = [22.34868, -0.31974];
 const centerEast = [-2.6, 40.3];
 const centerWest = [12.9, -1.7];
@@ -221,9 +222,6 @@ map.on('load', () => {
 
     // Toggle layers off and on
 
-    const composite_layer = ['composite_index_layer']
-    const readiness_layer = ['transition_readiness_layer']
-    const performance_layer = ['system_performance_layer']
     const layers = ['composite_index_layer', 'transition_readiness_layer', 'system_performance_layer']
 
     function handleData() {
@@ -243,6 +241,8 @@ map.on('load', () => {
         }
     };
 
+    // Event listener to trigger change
+
     document.getElementById("selections").addEventListener("change", handleData);
 
     // Filter by region
@@ -257,6 +257,8 @@ map.on('load', () => {
                 map.setFilter(layer, ['==', ['get', 'region'], selectedRegion]);
             }
         });
+
+        // Fly to selected region
 
         if (selectedRegion == 'all') {
             map.flyTo({
@@ -291,7 +293,32 @@ map.on('load', () => {
         };
     };
 
+    // Event listener to trigger change
+
     document.getElementById("regions").addEventListener("change", handleRegions);
+
+    // Zoom to country
+
+    layers.forEach(layer => {
+        map.on('click', layer, (e) => {
+            const feature = e.features[0];
+
+            const bounds = new mapboxgl.LngLatBounds();
+
+            const coords = normalizeCoords(feature.geometry);
+
+            coords.forEach(polygon => {
+                polygon.forEach(ring => {
+                    ring.forEach(coord => bounds.extend(coord));
+                });
+            });
+
+            map.fitBounds(bounds, {
+                padding: 40,
+                duration: 1000
+            });
+        });
+    });
 
 });
 
@@ -329,24 +356,4 @@ document.getElementById('returnbutton').addEventListener('click', () => {
         zoom: zoom, // LINE 10, 12
         essential: true
     });
-});
-
-// 2) Filter data layer to show selected region of Africa 
-let boundaryvalue;
-
-document.getElementById("boundaryfieldset").addEventListener('change', (e) => {
-    boundaryvalue = document.getElementById('boundary').value;
-
-    if (boundaryvalue == 'All') {
-        map.setFilter(
-            'bikeshare-fill', // CHANGE
-            ['has', 'AREA_NAME'] // CHANGE AREA_NAME TO RELEVANT FIELD 
-        );
-    } else {
-        map.setFilter(
-            'bikeshare-fill', // CHANGE
-            ['==', ['get', 'AREA_NAME'], boundaryvalue] // CHANGE AREA_NAME AND boundaryvalue
-        );
-    }
-
 });
