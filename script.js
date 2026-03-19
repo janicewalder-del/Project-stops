@@ -257,6 +257,38 @@ map.on('load', () => {
                 map.setFilter(layer, ['==', ['get', 'region'], selectedRegion]);
             }
         });
+
+        if (selectedRegion == 'all') {
+            map.flyTo({
+                center: center,
+                zoom: minZoom
+            });
+        } else if (selectedRegion == 'east') {
+            map.flyTo({
+                center: centerEast,
+                zoom: maxZoom
+            });
+        } else if (selectedRegion == 'west') {
+            map.flyTo({
+                center: centerWest,
+                zoom: maxZoom
+            });
+        } else if (selectedRegion == 'north') {
+            map.flyTo({
+                center: centerNorth,
+                zoom: maxZoom
+            });
+        } else if (selectedRegion == 'south') {
+            map.flyTo({
+                center: centerSouth,
+                zoom: maxZoom
+            });
+        } else if (selectedRegion == 'central') {
+            map.flyTo({
+                center: center,
+                zoom: maxZoom
+            });
+        };
     };
 
     document.getElementById("regions").addEventListener("change", handleRegions);
