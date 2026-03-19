@@ -217,6 +217,7 @@ map.on('load', () => {
     const composite_layer = ['composite_index_layer']
     const readiness_layer = ['transition_readiness_layer']
     const performance_layer = ['system_performance_layer']
+    let currentData = composite_layer
     const layers = ['composite_index_layer', 'transition_readiness_layer', 'system_performance_layer']
 
     function handleData() {
@@ -226,15 +227,15 @@ map.on('load', () => {
 
         if (selectedData == 'composite') {
             updateLegend(composite_stops);
-            var currentData = composite_layer;
+            let currentData = composite_layer;
             map.setLayoutProperty('composite_index_layer', 'visibility', 'visible');
         } else if (selectedData == 'readiness') {
             updateLegend(readiness_stops);
-            var currentData = readiness_layer;
+            let currentData = readiness_layer;
             map.setLayoutProperty('transition_readiness_layer', 'visibility', 'visible');
         } else if (selectedData == 'performance') {
             updateLegend(performance_stops);
-            var currentData = performance_layer;
+            let currentData = performance_layer;
             map.setLayoutProperty('system_performance_layer', 'visibility', 'visible');
         }
     };
@@ -243,31 +244,13 @@ map.on('load', () => {
 
     // Filter by region
 
-    function handleRegions () {
+    function handleRegions() {
         var selectedRegion = document.getElementById("regions").value;
 
         if (selectedRegion == 'all') {
-
-        } else if (selectedRegion == 'east') {
-            map.setFilter(currentData,
-                ['==', ['get', 'region'], 'east']
-            );
-        } else if (selectedRegion == 'west') {
-            map.setFilter(currentData,
-                ['==', ['get', 'region'], 'west']
-            );
-        } else if (selectedRegion == 'north') {
-            map.setFilter(currentData,
-                ['==', ['get', 'region'], 'north']
-            );
-        } else if (selectedRegion == 'south') {
-            map.setFilter(currentData,
-                ['==', ['get', 'region'], 'south']
-            );
-        } else if (selectedRegion == 'central') {
-            map.setFilter(currentData,
-                ['==', ['get', 'region'], 'central']
-            );
+            map.setFilter(currentData, null);
+        } else {
+        map.setFilter(currentData, ['==', ['get', 'region'], selectedRegion]);
         }
     }
 
