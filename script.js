@@ -142,6 +142,10 @@ map.on('load', () => {
         }
     });
 
+    composite_stops.forEach((stop, i) => {
+        document.getElementById(`stop_${i}`).textContent = stop;
+    });
+
     // Transition readiness layer
 
     map.addSource('transition_readiness', {
@@ -207,7 +211,7 @@ map.on('load', () => {
         document.getElementById('stop_3').textContent = stops_variable[3];
         document.getElementById('stop_4').textContent = stops_variable[4];
     }
-    
+
     // Toggle layers off and on
 
     const layers = ['composite_index_layer', 'transition_readiness_layer', 'system_performance_layer']
