@@ -300,7 +300,7 @@ map.on('load', () => {
     // Popups
 
     const energy_popup = new mapboxgl.Popup({
-        closeButton: true,
+        closeButton: false,
         closeOnClick: false
     });
 
@@ -317,7 +317,7 @@ map.on('load', () => {
             const read = feature.properties.transition_readiness;
             const perf = feature.properties.system_performance;
 
-            map.setPaintProperty(layer, 'fill-opacity', [
+            map.setPaintProperty(layer, 'fill-opacity', [ // This doesn't work yet
                 'case',
                 ['==', ['id'], featureId], 1
             ]);
@@ -328,7 +328,7 @@ map.on('load', () => {
                 <strong>Composite Index: ${ind}</strong><br>
                 <strong>Transition Readiness: ${read}</strong><br>
                 <strong>System Performance: ${perf}</strong><br>
-                <strong>Click to zoom in</strong>
+                <strong>+ Click to zoom in</strong>
                 `)
                 .addTo(map);
         });
