@@ -222,6 +222,27 @@ map.on('load', () => {
         }
     };
 
+    function handleData() {
+        var selectedData = document.getElementById("selections").value;
+
+        layers.forEach(layer => { map.setLayoutProperty(layer, 'visibility', 'none') });
+
+        switch (selectedData) {
+            case 'composite':
+                map.setLayoutProperty('composite_index_layer', 'visibility', 'visible');
+                updateLegend(composite_stops);
+                break;
+            case 'readiness':
+                map.setLayoutProperty('transition_readiness_layer', 'visibility', 'visible');
+                updateLegend(readiness_stops);
+                break;
+            case 'performance':
+                map.setLayoutProperty('system_performance_layer', 'visibility', 'visible');
+                updateLegend(performance_stops);
+                break;
+        }
+    }
+
     document.getElementById("selections").addEventListener("change", handleData);
 
 });
