@@ -253,41 +253,9 @@ map.on('load', () => {
         layers.forEach(layer => {
             if (selectedRegion == 'all') {
                 map.setFilter(layer, null);
-                map.flyTo({
-                    center: center,
-                    zoom: minZoom
-                });
-            } else if (selectedRegion == 'east') {
+            } else {
                 map.setFilter(layer, ['==', ['get', 'region'], selectedRegion]);
-                map.flyTo({
-                    center: centerEast,
-                    zoom: maxZoom
-                });
-            } else if (selectedRegion == 'west') {
-                map.setFilter(layer, ['==', ['get', 'region'], selectedRegion]);
-                map.flyTo({
-                    center: centerWest,
-                    zoom: maxZoom
-                });
-            } else if (selectedRegion == 'north') {
-                map.setFilter(layer, ['==', ['get', 'region'], selectedRegion]);
-                map.flyTo({
-                    center: centerNorth,
-                    zoom: maxZoom
-                });
-            } else if (selectedRegion == 'south') {
-                map.setFilter(layer, ['==', ['get', 'region'], selectedRegion]);
-                map.flyTo({
-                    center: centerSouth,
-                    zoom: maxZoom
-                });
-            } else if (selectedRegion == 'central') {
-                map.setFilter(layer, ['==', ['get', 'region'], selectedRegion]);
-                map.flyTo({
-                    center: center,
-                    zoom: maxZoom
-                });
-            };
+            }
         });
     };
 
