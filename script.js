@@ -297,28 +297,63 @@ map.on('load', () => {
 
     document.getElementById("regions").addEventListener("change", handleRegions);
 
-    // Zoom to country
+    // Popups
+
+    const energy_popup = new mapboxgl.Popup({
+        closeButton: false,
+        closeOnClick: false
+    });
 
     layers.forEach(layer => {
+        map.on('mouseenter', layer, function (e) {
+
+            map.getCanvas().style.cursor = 'pointer';
+
+            const coordinates = e.lngLat;
+            const ind = e.features[0].properties.composite_index;
+            const read = e.features[0].properties.transition_readiness;
+            const perf = e.features[0].properties.system_performance;
+
+            energy_popup
+                .setLngLat(coordinates)
+                .setHTML(`
+                <strong>Composite Index: ${ind}</strong><br>
+                <strong>Transition Readiness: ${read}</strong><br>
+                <strong>System Performance: ${perf}</strong>
+                `)
+                .addTo(map);
+        });
+
+        map.on('mouseleave', 'collishex_layer', function () {
+
+            map.getCanvas().style.cursor = '';
+            hex_popup.remove();
+
+        });
+    });
+
+    // Zoom to country - commenting out because it doesn't work yet
+
+    /* layers.forEach(layer => {
         map.on('click', layer, (e) => {
             const feature = e.features[0];
-
+ 
             const bounds = new mapboxgl.LngLatBounds();
-
+ 
             const coords = normalizeCoords(feature.geometry);
-
+ 
             coords.forEach(polygon => {
                 polygon.forEach(ring => {
                     ring.forEach(coord => bounds.extend(coord));
                 });
             });
-
+ 
             map.fitBounds(bounds, {
                 padding: 40,
                 duration: 1000
             });
         });
-    });
+    }); */
 
 });
 
