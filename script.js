@@ -9,6 +9,10 @@ mapboxgl.accessToken = 'pk.eyJ1IjoibmFkaW5lY29uc3VuamkiLCJhIjoiY21rZWU1djI4MDV6N
 
 // Center coordinates for map on load and zoom change(to change, refer to https://labs.mapbox.com/location-helper)
 const center = [22.34868, -0.31974];
+const centerEast = [0, 0];
+const centerWest = [0, 0];
+const centerNorth = [17.5, 19.5];
+const centerSouth = [0, 0];
 const zoom = 2.6;
 
 // Initialize map and edit to your preference
@@ -91,7 +95,8 @@ map.on('load', () => {
 
     map.on('click', 'testpoint', (e) => {
         map.flyTo({
-            center: e.features[0].geometry.coordinates, zoom: 15
+            center: e.features[0].geometry.coordinates,
+            zoom: 15
         });
     });
 
@@ -249,8 +254,31 @@ map.on('load', () => {
 
         if (selectedRegion == 'all') {
             map.setFilter(currentData, null);
-        } else {
-        map.setFilter(currentData, ['==', ['get', 'region'], selectedRegion]);
+        } else if (selectedRegion == 'east') {
+            map.setFilter(currentData, ['==', ['get', 'region'], selectedRegion]);
+            map.flyTo({
+                center: center,
+            });
+        } else if (selectedRegion == 'west') {
+            map.setFilter(currentData, ['==', ['get', 'region'], selectedRegion]);
+            map.flyTo({
+                center: center,
+            });
+        } else if (selectedRegion == 'north') {
+            map.setFilter(currentData, ['==', ['get', 'region'], selectedRegion]);
+            map.flyTo({
+                center: centerNorth,
+            });
+        } else if (selectedRegion == 'south') {
+            map.setFilter(currentData, ['==', ['get', 'region'], selectedRegion]);
+            map.flyTo({
+                center: center,
+            });
+        } else if (selectedRegion == 'central') {
+            map.setFilter(currentData, ['==', ['get', 'region'], selectedRegion]);
+            map.flyTo({
+                center: center,
+            });
         }
     }
 
