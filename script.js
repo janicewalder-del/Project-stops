@@ -319,15 +319,16 @@ map.on('load', () => {
                 .setHTML(`
                 <strong>Composite Index: ${ind}</strong><br>
                 <strong>Transition Readiness: ${read}</strong><br>
-                <strong>System Performance: ${perf}</strong>
+                <strong>System Performance: ${perf}</strong><br>
+                <strong>Click to zoom in</strong>
                 `)
                 .addTo(map);
         });
 
-        map.on('mouseleave', 'collishex_layer', function () {
+        map.on('mouseleave', layer, function () {
 
             map.getCanvas().style.cursor = '';
-            hex_popup.remove();
+            energy_popup.remove();
 
         });
     });
