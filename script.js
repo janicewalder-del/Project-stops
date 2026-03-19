@@ -255,7 +255,7 @@ map.on('load', () => {
         var selectedRegion = document.getElementById("regions").value;
 
         if (selectedRegion == 'all') {
-            map.setFilter(currentData, null);
+            map.setFilter(layers, null);
         } else if (selectedRegion == 'east') {
             map.setFilter(currentData, ['==', ['get', 'region'], 'east']);
             map.flyTo({
@@ -263,25 +263,25 @@ map.on('load', () => {
                 zoom: maxZoom
             });
         } else if (selectedRegion == 'west') {
-            map.setFilter(currentData, ['==', ['get', 'region'], 'west']);
+            map.setFilter(layers, ['==', ['get', 'region'], 'west']);
             map.flyTo({
                 center: centerWest,
                 zoom: maxZoom
             });
         } else if (selectedRegion == 'north') {
-            map.setFilter(currentData, ['==', ['get', 'region'], 'north']);
+            map.setFilter(layers, ['==', ['get', 'region'], 'north']);
             map.flyTo({
                 center: centerNorth,
                 zoom: maxZoom
             });
         } else if (selectedRegion == 'south') {
-            map.setFilter(currentData, ['==', ['get', 'region'], 'south']);
+            map.setFilter(layers, ['==', ['get', 'region'], 'south']);
             map.flyTo({
                 center: centerSouth,
                 zoom: maxZoom
             });
         } else if (selectedRegion == 'central') {
-            map.setFilter(currentData, ['==', ['get', 'region'], 'central']);
+            map.setFilter(layers, ['==', ['get', 'region'], 'central']);
             map.flyTo({
                 center: center,
                 zoom: maxZoom
