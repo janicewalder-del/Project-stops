@@ -224,7 +224,6 @@ map.on('load', () => {
     const composite_layer = ['composite_index_layer']
     const readiness_layer = ['transition_readiness_layer']
     const performance_layer = ['system_performance_layer']
-    let currentData = composite_layer
     const layers = ['composite_index_layer', 'transition_readiness_layer', 'system_performance_layer']
 
     function handleData() {
@@ -234,15 +233,12 @@ map.on('load', () => {
 
         if (selectedData == 'composite') {
             updateLegend(composite_stops);
-            let currentData = composite_layer;
             map.setLayoutProperty('composite_index_layer', 'visibility', 'visible');
         } else if (selectedData == 'readiness') {
             updateLegend(readiness_stops);
-            let currentData = readiness_layer;
             map.setLayoutProperty('transition_readiness_layer', 'visibility', 'visible');
         } else if (selectedData == 'performance') {
             updateLegend(performance_stops);
-            let currentData = performance_layer;
             map.setLayoutProperty('system_performance_layer', 'visibility', 'visible');
         }
     };
@@ -254,46 +250,49 @@ map.on('load', () => {
     function handleRegions() {
         var selectedRegion = document.getElementById("regions").value;
 
-        if (selectedRegion == 'all') {
-            map.setFilter(layers, null);
-            map.flyTo({
-                center: center,
-                zoom: minZoom
-            });
-        } else if (selectedRegion == 'east') {
-            map.setFilter(currentData, ['==', ['get', 'region'], selectedRegion]);
-            map.flyTo({
-                center: centerEast,
-                zoom: maxZoom
-            });
-        } else if (selectedRegion == 'west') {
-            map.setFilter(currentData, ['==', ['get', 'region'], selectedRegion]);
-            map.flyTo({
-                center: centerWest,
-                zoom: maxZoom
-            });
-        } else if (selectedRegion == 'north') {
-            map.setFilter(currentData, ['==', ['get', 'region'], selectedRegion]);
-            map.flyTo({
-                center: centerNorth,
-                zoom: maxZoom
-            });
-        } else if (selectedRegion == 'south') {
-            map.setFilter(currentData, ['==', ['get', 'region'], selectedRegion]);
-            map.flyTo({
-                center: centerSouth,
-                zoom: maxZoom
-            });
-        } else if (selectedRegion == 'central') {
-            map.setFilter(currentData, ['==', ['get', 'region'], selectedRegion]);
-            map.flyTo({
-                center: center,
-                zoom: maxZoom
-            });
-        }
-    }
+        layers.forEach(layer => {
+            if (selectedRegion == 'all') {
+                map.setFilter(layer, null);
+                map.flyTo({
+                    center: center,
+                    zoom: minZoom
+                });
+            } else if (selectedRegion == 'east') {
+                map.setFilter(layer, ['==', ['get', 'region'], selectedRegion]);
+                map.flyTo({
+                    center: centerEast,
+                    zoom: maxZoom
+                });
+            } else if (selectedRegion == 'west') {
+                map.setFilter(layer, ['==', ['get', 'region'], selectedRegion]);
+                map.flyTo({
+                    center: centerWest,
+                    zoom: maxZoom
+                });
+            } else if (selectedRegion == 'north') {
+                map.setFilter(layer, ['==', ['get', 'region'], selectedRegion]);
+                map.flyTo({
+                    center: centerNorth,
+                    zoom: maxZoom
+                });
+            } else if (selectedRegion == 'south') {
+                map.setFilter(layer, ['==', ['get', 'region'], selectedRegion]);
+                map.flyTo({
+                    center: centerSouth,
+                    zoom: maxZoom
+                });
+            } else if (selectedRegion == 'central') {
+                map.setFilter(layer, ['==', ['get', 'region'], selectedRegion]);
+                map.flyTo({
+                    center: center,
+                    zoom: maxZoom
+                });
+            }
+        });
 
-    document.getElementById("regions").addEventListener("change", handleRegions);
+        document.getElementById("regions").addEventListener("change", handleRegions);
+
+    };
 
 });
 
